@@ -6,6 +6,13 @@ const voteController = async (req, res) => {
 	const { value } = req.body;
 	const { planId } = req.params;
 
+	if (typeof value !== "boolean") {
+		return res.status(400).json({
+			success: false,
+			data: { message: "Provide your vote." },
+		});
+	}
+
 	let previousVote;
 	try {
 		previousVote = await Vote.findOne({
