@@ -7,6 +7,12 @@ const User = db.user;
 
 const loginController = async (req, res) => {
 	const { username, password } = req.body;
+	if (!username || !password) {
+		return res.status(400).json({
+			success: false,
+			data: { message: "Provide all of the inputs." },
+		});
+	}
 
 	let userRaw;
 	try {
