@@ -1,9 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import dotenv from "dotenv";
-
-dotenv.config({ path: "/.env" });
 
 import indexRouter from "./routes/index.js";
 import plansRouter from "./routes/plan.js";
@@ -18,5 +15,16 @@ app.use(express.static("./public"));
 
 app.use("/", indexRouter);
 app.use("/plan", plansRouter);
+
+import db from "./models/index.js";
+
+db.sequelize
+	.sync()
+	.then(() => {
+		console.log("Synced db.");
+	})
+	.catch((err) => {
+		console.log("Failed to sync db: " + err.message);
+	});
 
 export default app;

@@ -1,7 +1,9 @@
 import { Sequelize } from "@sequelize/core";
 import { MySqlDialect } from "@sequelize/mysql";
+import dotenv from "dotenv";
 
-const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = process.env;
+const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } =
+	dotenv.config().parsed;
 
 const sequelize = new Sequelize({
 	dialect: MySqlDialect,
@@ -9,7 +11,7 @@ const sequelize = new Sequelize({
 	user: DB_USER,
 	password: DB_PASSWORD,
 	host: DB_HOST,
-	port: DB_PORT,
+	port: +DB_PORT,
 });
 
 try {
