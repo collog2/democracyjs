@@ -22,9 +22,9 @@ const createPlanController = async (req, res) => {
 		});
 	}
 
-	let newPlanRaw;
+	let plan;
 	try {
-		newPlanRaw = await Plan.create({
+		plan = await Plan.create({
 			title,
 			deadline: new Date(deadline).toISOString(),
 		});
@@ -41,13 +41,9 @@ const createPlanController = async (req, res) => {
 			.json({ success: false, data: { message: "server error" } });
 	}
 
-	const newPlan = newPlanRaw.get({ plain: true });
-
 	return res.status(201).json({
 		success: true,
-		data: {
-			plan: newPlan,
-		},
+		data: { plan },
 	});
 };
 

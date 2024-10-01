@@ -14,9 +14,9 @@ const loginController = async (req, res) => {
 		});
 	}
 
-	let userRaw;
+	let user;
 	try {
-		userRaw = await User.findOne({ where: { username } });
+		user = await User.findOne({ where: { username }, raw: true });
 	} catch (error) {
 		console.error(error);
 		return res
@@ -24,20 +24,19 @@ const loginController = async (req, res) => {
 			.json({ success: false, data: { message: "server error" } });
 	}
 
-	if (!userRaw) {
+	if (!user) {
 		return res.status(404).json({
 			success: false,
 			data: { message: "username doesn't exist." },
 		});
 	}
 
-	if (!bcrypt.compareSync(password, userRaw.password)) {
+	if (!bcrypt.compareSync(password, user.password)) {
 		return res
 			.status(401)
 			.json({ success: false, data: { message: "wrong password." } });
 	}
 
-	let user = userRaw.get({ plain: true });
 	delete user.password;
 
 	let token;
