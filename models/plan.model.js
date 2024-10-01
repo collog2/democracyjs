@@ -4,9 +4,11 @@ const planFactory = (sequelize, Sequelize) => {
 		title: {
 			type: DataTypes.STRING,
 			unique: true,
+			allowNull: false,
 		},
 		deadline: {
 			type: DataTypes.DATE,
+			allowNull: false,
 		},
 	});
 

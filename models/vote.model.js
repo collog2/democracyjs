@@ -3,6 +3,7 @@ const voteFactory = (sequelize, Sequelize) => {
 	const Vote = sequelize.define("vote", {
 		value: {
 			type: DataTypes.BOOLEAN,
+			allowNull: false,
 		},
 	});
 

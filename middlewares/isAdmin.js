@@ -5,7 +5,7 @@ const isAdmin = (req, res, next) => {
 		return res.status(403).json({
 			success: false,
 			data: {
-				message: "Only admins can define plans.",
+				message: "Only admins are permitted.",
 			},
 		});
 	}

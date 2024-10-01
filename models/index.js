@@ -28,10 +28,18 @@ const User = userFactory(sequelize, Sequelize);
 const Vote = voteFactory(sequelize, Sequelize);
 const Plan = planFactory(sequelize, Sequelize);
 
-User.hasMany(Vote);
+User.hasMany(Vote, {
+	foriegnKey: {
+		allowNull: false,
+	},
+});
 Vote.belongsTo(User);
 
-Plan.hasMany(Vote);
+Plan.hasMany(Vote, {
+	foriegnKey: {
+		allowNull: false,
+	},
+});
 Vote.belongsTo(Plan);
 
 const db = {};
