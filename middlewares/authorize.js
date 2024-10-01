@@ -1,8 +1,8 @@
 import jwt from "jsonwebtoken";
 
 const authorize = (req, res, next) => {
-	//Authorization: 'Bearer TOKEN'
-	const [type, token] = req.headers["Authorization"].split(" ");
+	//authorization: 'Bearer TOKEN'
+	const [type, token] = req.headers["authorization"].split(" ");
 	if (!token) {
 		return res.status(401).json({ message: "no JWT provided." });
 	}

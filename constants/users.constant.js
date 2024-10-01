@@ -1,39 +1,44 @@
+import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
+
+const saltRounds = dotenv.config().parsed.BC_SALT_ROUNDS;
+const salt = bcrypt.genSaltSync(+saltRounds);
+
 const users = [
 	{
-		id: 1,
 		username: "admin",
 		role: "ADMIN",
-		password: "admin",
+		password: bcrypt.hashSync("admin", salt),
 	},
 	{
-		id: 2,
+		username: "user1",
+		role: "VOTER",
+		password: bcrypt.hashSync("user1", salt),
+	},
+	{
 		username: "user2",
 		role: "VOTER",
-		password: "user2",
+		password: bcrypt.hashSync("user2", salt),
 	},
 	{
-		id: 3,
 		username: "user3",
 		role: "VOTER",
-		password: "user3",
+		password: bcrypt.hashSync("user3", salt),
 	},
 	{
-		id: 4,
 		username: "user4",
 		role: "VOTER",
-		password: "user4",
+		password: bcrypt.hashSync("user4", salt),
 	},
 	{
-		id: 5,
 		username: "user5",
 		role: "VOTER",
-		password: "user5",
+		password: bcrypt.hashSync("user5", salt),
 	},
 	{
-		id: 6,
 		username: "user6",
 		role: "VOTER",
-		password: "user6",
+		password: bcrypt.hashSync("user6", salt),
 	},
 ];
 

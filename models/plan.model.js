@@ -3,6 +3,7 @@ const planFactory = (sequelize, Sequelize) => {
 	const Plan = sequelize.define("plan", {
 		title: {
 			type: DataTypes.STRING,
+			unique: true,
 		},
 		deadline: {
 			type: DataTypes.DATE,

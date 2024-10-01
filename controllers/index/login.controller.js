@@ -1,39 +1,46 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import dotenv from "dotenv";
+import db from "../../models/index.js";
+const { JWT_SECRET, JWT_EXPIRES_IN } = dotenv.config().parsed;
+const User = db.user;
 
-const loginController = (req, res) => {
+const loginController = async (req, res) => {
 	const { username, password } = req.body;
 
-	let user;
+	let userRaw;
 	try {
-		// query find user by username
+		userRaw = await User.findOne({ where: { username } });
 	} catch (error) {
+		console.error(error);
 		return res
 			.status(500)
 			.json({ success: false, data: { message: "server error" } });
 	}
 
-	if (!user) {
+	if (!userRaw) {
 		return res.status(404).json({
 			success: false,
 			data: { message: "username doesn't exist." },
 		});
 	}
 
-	if (!bcrypt.compareSync(password, user.password)) {
+	if (!bcrypt.compareSync(password, userRaw.password)) {
 		return res
 			.status(401)
 			.json({ success: false, data: { message: "wrong password." } });
 	}
 
+	let user = userRaw.get({ plain: true });
 	delete user.password;
 
 	let token;
 	try {
-		token = jwt.sign(user, process.env.JWT_SECRET, {
-			expiresIn: process.env.JWT_EXPIRES_IN,
+		token = jwt.sign(user, JWT_SECRET, {
+			expiresIn: JWT_EXPIRES_IN,
 		});
 	} catch (error) {
+		console.error(error);
 		return res
 			.status(500)
 			.json({ success: false, data: { message: "server error" } });
