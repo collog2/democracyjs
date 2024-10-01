@@ -8,7 +8,7 @@ import { MySqlDialect } from "@sequelize/mysql";
 dotenv.config({ path: "/.env" });
 
 import indexRouter from "./routes/index.js";
-import usersRouter from "./routes/users.js";
+import plansRouter from "./routes/plan.js";
 
 var app = express();
 
@@ -19,7 +19,7 @@ app.use(cookieParser());
 app.use(express.static("./public"));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/plan", plansRouter);
 
 const sequelize = new Sequelize({
 	dialect: MySqlDialect,
